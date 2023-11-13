@@ -17,10 +17,20 @@ app = Flask(__name__)
 # Route for the GitHub webhook
 @app.route('/git_update', methods=['POST'])
 def git_update():
-    repo = git.Repo("./ITAR")
+    try:        # for remote server or linux system
+        repo = git.Repo("./ITAR")
+    except:     # for local development environment or windows system
+        repo = git.Repo("../ITAR")
     origin = repo.remotes.origin
-    repo.create_head('master',
-                     origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
+    # check if main branch used as master
+    branches = git.Git().branch("--all").split()
+    if "main" in branches:
+        repo.create_head('main',
+                         origin.refs.main).set_tracking_branch(origin.refs.main).checkout()
+    else:
+        repo.create_head('master',
+                    origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
+
     origin.pull()
     return '', 200
 

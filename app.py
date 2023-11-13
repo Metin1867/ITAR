@@ -19,8 +19,8 @@ app = Flask(__name__)
 def git_update():
     repo = git.Repo("../ITAR")
     origin = repo.remotes.origin
-    repo.create_head('main',
-                     origin.refs.main).set_tracking_branch(origin.refs.main).checkout()
+    repo.create_head('master',
+                     origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
     origin.pull()
     return '', 200
 

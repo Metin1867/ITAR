@@ -15,8 +15,6 @@ import os
 app = Flask(__name__)
 
 # Route for the GitHub webhook
-
-
 @app.route('/git_update', methods=['POST'])
 def git_update():
     repo = git.Repo('./orbe')

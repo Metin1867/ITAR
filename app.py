@@ -17,7 +17,7 @@ app = Flask(__name__)
 # Route for the GitHub webhook
 @app.route('/git_update', methods=['POST'])
 def git_update():
-    repo = git.Repo('./ITAR')
+    repo = git.Repo("../ITAR")
     origin = repo.remotes.origin
     repo.create_head('main',
                      origin.refs.main).set_tracking_branch(origin.refs.main).checkout()

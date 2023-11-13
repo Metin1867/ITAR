@@ -23,8 +23,7 @@ def git_update():
         repo = git.Repo("../ITAR")
     origin = repo.remotes.origin
     # check if main branch used as master
-    branches = git.Git().branch("--all").split()
-    if "main" in branches:
+    if "main" in repo.branches:
         repo.create_head('main',
                          origin.refs.main).set_tracking_branch(origin.refs.main).checkout()
     else:
